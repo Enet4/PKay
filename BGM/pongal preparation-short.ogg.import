@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pongal preparation-short.ogg-4f18a7e2be27ad612ffc2fcb2b072764.oggstr"
+
+[deps]
+
+source_file="res://BGM/pongal preparation-short.ogg"
+dest_files=[ "res://.import/pongal preparation-short.ogg-4f18a7e2be27ad612ffc2fcb2b072764.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

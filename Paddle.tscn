@@ -1,0 +1,99 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://paddle.gd" type="Script" id=1]
+[ext_resource path="res://img/paddle/paddle-edge.png" type="Texture" id=2]
+[ext_resource path="res://img/paddle/paddle-torso-thin.png" type="Texture" id=3]
+[ext_resource path="res://img/paddle/gun-base.png" type="Texture" id=4]
+[ext_resource path="res://sound/Futuristic Sniper Rifle Single Shot.wav" type="AudioStream" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 4, 22 )
+_sections_unfolded = [ "Resource" ]
+
+[node name="Paddle" type="KinematicBody2D"]
+
+position = Vector2( 0.209343, 0 )
+z_index = 1
+input_pickable = false
+collision_layer = 1
+collision_mask = 3
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Z Index", "collision" ]
+has_gun = false
+length = 36
+max_speed = 200
+move_decay = 450
+move_acceleration = 500
+stun_vulnerability = 1
+
+[node name="EdgeUp" type="Sprite" parent="." index="0"]
+
+position = Vector2( 0, -16 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
+[node name="EdgeDown" type="Sprite" parent="." index="1"]
+
+position = Vector2( 0, 16 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Shaft" type="Sprite" parent="." index="2"]
+
+position = Vector2( -8, -10 )
+scale = Vector2( 1, 20 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0.5, 0 )
+region_rect = Rect2( 0, 0, 4, 8 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="CenterGunBase" type="Sprite" parent="." index="3"]
+
+visible = false
+position = Vector2( 11, 0.5 )
+texture = ExtResource( 4 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="collision" type="CollisionShape2D" parent="." index="4"]
+
+position = Vector2( 4, 0 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="GunRecoilTimer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 0.6
+one_shot = false
+autostart = false
+
+[node name="GunFireSound" type="AudioStreamPlayer2D" parent="." index="6"]
+
+stream = ExtResource( 5 )
+volume_db = -1.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="StunTimer" type="Timer" parent="." index="7"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+[connection signal="stun" from="." to="." method="_on_Paddle_stun" binds= [ 0.0 ]]
+
+[connection signal="timeout" from="GunRecoilTimer" to="." method="_on_GunRecoilTimer_timeout"]
+
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
+
+

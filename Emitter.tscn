@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://emitter.gd" type="Script" id=1]
+[ext_resource path="res://PlainBall.tscn" type="PackedScene" id=2]
+
+[node name="Emitter" type="Node"]
+
+script = ExtResource( 1 )
+emission_period = 2.5
+total_enemies_to_emit = 300
+emitted_speed = 175
+object_class = ExtResource( 2 )
+random_seed = -1
+emission_time_variance_range = 0.25
+
+[node name="EmitTimer" type="Timer" parent="." index="0"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = true
+autostart = false
+
+[connection signal="emergency" from="." to="." method="_on_emergency"]
+
+[connection signal="stop" from="." to="." method="_on_stop"]
+
+[connection signal="timeout" from="EmitTimer" to="." method="_on_EmitTimer_timeout"]
+
+

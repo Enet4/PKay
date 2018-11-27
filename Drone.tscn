@@ -1,0 +1,95 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Drone.gd" type="Script" id=1]
+[ext_resource path="res://img/drone/drone1.png" type="Texture" id=2]
+[ext_resource path="res://img/drone/drone2.png" type="Texture" id=3]
+[ext_resource path="res://img/drone/drone3.png" type="Texture" id=4]
+[ext_resource path="res://img/drone/drone4.png" type="Texture" id=5]
+[ext_resource path="res://img/drone/drone5.png" type="Texture" id=6]
+[ext_resource path="res://img/drone/drone6.png" type="Texture" id=7]
+[ext_resource path="res://img/drone/drone7.png" type="Texture" id=8]
+[ext_resource path="res://img/drone/drone8.png" type="Texture" id=9]
+[ext_resource path="res://img/drone/drone9.png" type="Texture" id=10]
+[ext_resource path="res://sound/drone.wav" type="AudioStream" id=11]
+
+[sub_resource type="CapsuleShape2D" id=1]
+
+custom_solver_bias = 0.0
+radius = 8.0
+height = 4.0
+
+[sub_resource type="SpriteFrames" id=2]
+
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 2 ), ExtResource( 10 ) ],
+"loop": true,
+"name": "kamikaze",
+"speed": 10.0
+} ]
+_sections_unfolded = [ "Resource" ]
+
+[node name="Drone" type="RigidBody2D" index="0"]
+
+input_pickable = false
+collision_layer = 2
+collision_mask = 1
+mode = 2
+mass = 5.0
+friction = 0.25
+bounce = 0.1
+gravity_scale = 0.0
+custom_integrator = false
+continuous_cd = 0
+contacts_reported = 0
+contact_monitor = true
+sleeping = false
+can_sleep = false
+linear_velocity = Vector2( 0, 0 )
+linear_damp = -1.0
+angular_velocity = 0.0
+angular_damp = -1.0
+script = ExtResource( 1 )
+_sections_unfolded = [ "Angular", "Applied Forces", "Collision", "Linear", "Transform" ]
+attacking = false
+thrust_force = 100
+patience = 18
+fly_rect = Rect2( 350, 50, 180, 300 )
+health = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+
+position = Vector2( 0, 1 )
+rotation = 1.5708
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="1"]
+
+frames = SubResource( 2 )
+animation = "default"
+playing = true
+_sections_unfolded = [ "Transform" ]
+
+[node name="DroneSound" type="AudioStreamPlayer2D" parent="." index="2"]
+
+stream = ExtResource( 11 )
+volume_db = -2.5
+pitch_scale = 1.0
+autoplay = true
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
+[connection signal="damage" from="." to="." method="_on_Drone_damage"]
+
+[connection signal="hit" from="." to="." method="_on_Drone_hit"]
+
+

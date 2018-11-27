@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Futuristic Sniper Rifle Single Shot.wav-542ea959d992c501be5863f5e1bf0d8e.sample"
+
+[deps]
+
+source_file="res://sound/Futuristic Sniper Rifle Single Shot.wav"
+dest_files=[ "res://.import/Futuristic Sniper Rifle Single Shot.wav-542ea959d992c501be5863f5e1bf0d8e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

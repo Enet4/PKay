@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/pongal kombat.ogg-f241a5adcbab7ac6482caa5b7351036e.oggstr"
+
+[deps]
+
+source_file="res://BGM/pongal kombat.ogg"
+dest_files=[ "res://.import/pongal kombat.ogg-f241a5adcbab7ac6482caa5b7351036e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

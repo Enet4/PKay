@@ -1,0 +1,153 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://upgrade.gd" type="Script" id=1]
+[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://img/upgrade-arrow.png" type="Texture" id=3]
+
+[node name="upgrade" type="Node2D" index="0"]
+
+script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
+upgrade_name = ""
+upgrade_description = ""
+upgrade_id = ""
+upgrade_level = 0
+maximum_upgrade = 1
+price = null
+
+[node name="vbox" type="VBoxContainer" parent="." index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.06
+anchor_bottom = 0.0
+margin_top = -16.0
+margin_right = 207.16
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+_sections_unfolded = [ "Rect" ]
+
+[node name="hbox" type="HBoxContainer" parent="vbox" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 211.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+alignment = 0
+
+[node name="BtnBuy" type="Button" parent="vbox/hbox" index="0"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 105.0
+margin_bottom = 19.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+focus_mode = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 2 )
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+text = "Awesomeness"
+flat = false
+align = 1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="up1" type="Sprite" parent="vbox/hbox" index="1"]
+
+modulate = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+position = Vector2( 130, 10.4 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="up2" type="Sprite" parent="vbox/hbox" index="2"]
+
+modulate = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+position = Vector2( 140, 10.4 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="up3" type="Sprite" parent="vbox/hbox" index="3"]
+
+modulate = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+position = Vector2( 150, 10.4 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="up4" type="Sprite" parent="vbox/hbox" index="4"]
+
+modulate = Color( 0.0980392, 0.0980392, 0.0980392, 1 )
+position = Vector2( 160, 10.4 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Transform", "Visibility" ]
+
+[node name="LblDescription" type="Label" parent="vbox" index="1"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 23.0
+margin_right = 211.0
+margin_bottom = 36.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+text = "Makes you 174% more awesome"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="LblCost" type="Label" parent="vbox" index="2"]
+
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 40.0
+margin_right = 211.0
+margin_bottom = 53.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+text = "Cost: over 9000"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[connection signal="change_level" from="." to="." method="_on_upgrade_change_level"]
+
+[connection signal="pressed" from="vbox/hbox/BtnBuy" to="." method="_on_BtnBuy_pressed"]
+
+

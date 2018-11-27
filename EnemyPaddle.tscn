@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://EnemyPaddle.gd" type="Script" id=1]
+[ext_resource path="res://img/paddle/enemy-paddle-edge.png" type="Texture" id=2]
+[ext_resource path="res://img/paddle/enemy-paddle-torso-thin.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 7, 12 )
+
+[node name="EnemyPaddle" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 4
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision", "Transform" ]
+length = 36
+max_speed = 150
+move_decay = 700
+move_acceleration = 700
+stun_time = 0
+entered = false
+leaving = false
+enter_speed = 50
+
+[node name="collision" type="CollisionShape2D" parent="." index="0"]
+
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="EdgeUp" type="Sprite" parent="." index="1"]
+
+position = Vector2( 0, -6.5 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Offset", "Region", "Transform" ]
+
+[node name="Shaft" type="Sprite" parent="." index="2"]
+
+position = Vector2( 0, 1 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="EdgeDown" type="Sprite" parent="." index="3"]
+
+position = Vector2( 0, 7 )
+scale = Vector2( 1, -1 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Offset", "Transform" ]
+
+[node name="RetargetTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 0.75
+one_shot = false
+autostart = false
+
+[node name="TTLTimer" type="Timer" parent="." index="5"]
+
+process_mode = 1
+wait_time = 15.0
+one_shot = true
+autostart = false
+
+[connection signal="timeout" from="RetargetTimer" to="." method="_on_RetargetTimer_timeout"]
+
+[connection signal="timeout" from="TTLTimer" to="." method="_on_RetargetTimer_timeout"]
+
+
