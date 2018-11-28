@@ -21,14 +21,17 @@ func _ready():
 		upgrade.set_level(status[k])
 	
 	# hide upgrades still not available
-	if self.wave_num < 2:
+	if self.wave_num <= 2:
 		$"margin/vbox/margin/grid/upgrade_forcefield".hide()
-	if self.wave_num < 3:
+
+	if self.wave_num <= 3:
 		$"margin/vbox/margin/grid/upgrade_gun".hide()
-	if self.wave_num < 4:
-		$"margin/vbox/margin/grid/upgrade_gun_rate".hide()
+		
+	if self.wave_num <= 4:
 		$"margin/vbox/margin/grid/upgrade_resistance".hide()
 
+	if self.wave_num <= 5:
+		$"margin/vbox/margin/grid/upgrade_gun_rate".hide()
 
 func pay(ncredits):
 	if self.credits < ncredits:

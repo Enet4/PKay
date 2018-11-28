@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/muzzle-fire.png-90aac19a08ec69b1558b122e6ab65846.stex"
+path="res://.import/barrier6.png-cb671193ba62bc43b72d0d45b0239225.stex"
 
 [deps]
 
-source_file="res://img/muzzle-fire.png"
-dest_files=[ "res://.import/muzzle-fire.png-90aac19a08ec69b1558b122e6ab65846.stex" ]
+source_file="res://img/barrier/barrier6.png"
+dest_files=[ "res://.import/barrier6.png-cb671193ba62bc43b72d0d45b0239225.stex" ]
 
 [params]
 

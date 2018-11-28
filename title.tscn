@@ -82,7 +82,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 117.0
 margin_right = 280.0
-margin_bottom = 182.0
+margin_bottom = 165.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -99,7 +99,7 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 280.0
-margin_bottom = 19.0
+margin_bottom = 22.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -117,42 +117,15 @@ flat = false
 align = 1
 _sections_unfolded = [ "Focus", "custom_fonts" ]
 
-[node name="BtnInstr" type="Button" parent="margin/vbox/vbox" index="1"]
+[node name="BtnExit" type="Button" parent="margin/vbox/vbox" index="1"]
 
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 23.0
+margin_top = 26.0
 margin_right = 280.0
-margin_bottom = 42.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-focus_neighbour_top = NodePath("../BtnNew")
-focus_mode = 2
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 3 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Instructions"
-flat = false
-align = 1
-_sections_unfolded = [ "Focus", "custom_fonts" ]
-
-[node name="BtnExit" type="Button" parent="margin/vbox/vbox" index="2"]
-
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-margin_top = 46.0
-margin_right = 280.0
-margin_bottom = 65.0
+margin_bottom = 48.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 focus_mode = 2
@@ -176,9 +149,9 @@ anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 282.0
+margin_top = 265.0
 margin_right = 280.0
-margin_bottom = 295.0
+margin_bottom = 281.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -205,8 +178,6 @@ mix_target = 0
 bus = "Master"
 
 [connection signal="button_down" from="margin/vbox/vbox/BtnNew" to="." method="_on_BtnNew_button_down"]
-
-[connection signal="button_down" from="margin/vbox/vbox/BtnInstr" to="." method="_on_BtnInstr_button_down"]
 
 [connection signal="button_down" from="margin/vbox/vbox/BtnExit" to="." method="_on_BtnExit_button_down"]
 

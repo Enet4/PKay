@@ -8,9 +8,14 @@ func _ready():
 	self._update_sprites()
 
 func _on_wall_area_entered( area ):
+	print("Base touched by: ", area)
 	if area.get_parent().get_name() == "PlainBall":
 		# TODO ball hit the base, damage and destroy ball
 		area.blow_up()
+
+func _on_touch_Drone(drone):
+	print("Base touched by drone: ", drone)
+	drone.blow_up()
 
 
 func _on_base_damage():
@@ -24,7 +29,6 @@ func _on_base_damage():
 		$"..".emit_signal("game_over")
 	else:
 		$AudioDamage.play()
-
 
 func _update_sprites():
 	$base1.hide()

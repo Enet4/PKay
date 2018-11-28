@@ -78,7 +78,6 @@ func _on_EmergencyTimer_timeout():
 
 
 func _on_TimeoutTimer_timeout():
-	print("Time out, destroy all enemies!")
 	self.timeout = true
 	$EmergencyTimer.stop()
 	# stop all emitters

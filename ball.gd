@@ -36,6 +36,8 @@ func _physics_process(delta):
 			self._on_touch_Ball(delta, collision)
 		elif collision.collider.get_parent().get_name() == "EnemyPaddle":
 			self._on_touch_EnemyPaddle(delta, collision)
+		elif collision.collider.get_parent().get_name() == "Barrier":
+			self._on_touch_Barrier(delta, collision)
 		else:
 			# bounce against any other kind of object
 			linear_velocity = linear_velocity.bounce(collision.normal)
@@ -48,7 +50,7 @@ func _process(delta):
 
 	# if ball moved off the screen
 	if self.position.x > get_viewport_rect().size.x and self.linear_velocity.x > 0:
-		if self.hit:
+		if self.hit and $Sprite.visible:
 			$"../../..".emit_signal('score', 5)
 		self.blow_up()
 
@@ -66,6 +68,10 @@ func _on_touch_Paddle(delta, collision):
 	var normal = self._paddle_normal_tweak(collision)
 	linear_velocity = linear_velocity.bounce(normal)
 
+func _on_touch_Barrier(delta, collision):
+	# bounce normally and destroy barrier
+	collision.collider.blow_up()
+	linear_velocity = linear_velocity.bounce(collision.normal)
 
 func _on_touch_Ball(delta, collision):
 	var ball = collision.collider
@@ -89,7 +95,9 @@ func _on_touch_Drone(delta, collision):
 	if self.hit:
 		# damage drone, score, and blow up
 		collision.collider.emit_signal('damage')
-		collision.collider.apply_impulse(collision.collider.position, collision.collider.linear_velocity)
+		collision.collider.apply_impulse(
+			self.position,
+			collision.collider.linear_velocity * -10)
 		$"../../..".emit_signal('score', 5)
 		self.blow_up()
 	# otherwise do nothing, just go through it

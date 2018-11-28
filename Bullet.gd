@@ -25,6 +25,10 @@ func _physics_process(delta):
 func _on_touch_Drone(delta, collision):
 	# emit damage and impulse
 	collision.collider.emit_signal('damage')
+	collision.collider.apply_impulse(
+		self.position,
+		self.linear_velocity * 2)
+
 	self.blow_up()
 
 func _on_touch_Ball(delta, collision):

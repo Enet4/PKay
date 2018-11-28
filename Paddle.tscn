@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://paddle.gd" type="Script" id=1]
 [ext_resource path="res://img/paddle/paddle-edge.png" type="Texture" id=2]
 [ext_resource path="res://img/paddle/paddle-torso-thin.png" type="Texture" id=3]
 [ext_resource path="res://img/paddle/gun-base.png" type="Texture" id=4]
 [ext_resource path="res://sound/Futuristic Sniper Rifle Single Shot.wav" type="AudioStream" id=5]
+[ext_resource path="res://img/muzzle-fire.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -12,7 +13,7 @@ custom_solver_bias = 0.0
 extents = Vector2( 4, 22 )
 _sections_unfolded = [ "Resource" ]
 
-[node name="Paddle" type="KinematicBody2D"]
+[node name="Paddle" type="KinematicBody2D" index="0"]
 
 position = Vector2( 0.209343, 0 )
 z_index = 1
@@ -75,7 +76,7 @@ autostart = false
 [node name="GunFireSound" type="AudioStreamPlayer2D" parent="." index="6"]
 
 stream = ExtResource( 5 )
-volume_db = -1.0
+volume_db = -1.5
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
@@ -90,10 +91,26 @@ wait_time = 1.0
 one_shot = false
 autostart = false
 
+[node name="muzzle-fire" type="Sprite" parent="." index="8"]
+
+visible = false
+position = Vector2( 18, 1 )
+texture = ExtResource( 6 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="MuzzleFireTimer" type="Timer" parent="muzzle-fire" index="0"]
+
+process_mode = 1
+wait_time = 0.03
+one_shot = false
+autostart = false
+
 [connection signal="stun" from="." to="." method="_on_Paddle_stun" binds= [ 0.0 ]]
 
 [connection signal="timeout" from="GunRecoilTimer" to="." method="_on_GunRecoilTimer_timeout"]
 
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
+
+[connection signal="timeout" from="muzzle-fire/MuzzleFireTimer" to="." method="_on_MuzzleFireTimer_timeout"]
 
 

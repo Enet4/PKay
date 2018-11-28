@@ -1,31 +1,34 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://wave.gd" type="Script" id=1]
 [ext_resource path="res://Emitter.tscn" type="PackedScene" id=2]
 [ext_resource path="res://EnemyPaddle.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Drone.tscn" type="PackedScene" id=4]
-[ext_resource path="res://img/dirt-tile.png" type="Texture" id=5]
-[ext_resource path="res://Paddle.tscn" type="PackedScene" id=6]
-[ext_resource path="res://wall.gd" type="Script" id=7]
-[ext_resource path="res://img/base/base1.png" type="Texture" id=8]
-[ext_resource path="res://img/base/base2.png" type="Texture" id=9]
-[ext_resource path="res://img/base/base3.png" type="Texture" id=10]
-[ext_resource path="res://sound/explodemini.wav" type="AudioStream" id=11]
-[ext_resource path="res://sound/Chunky Explosion.ogg" type="AudioStream" id=12]
-[ext_resource path="res://img/base/base-forcefield.png" type="Texture" id=13]
-[ext_resource path="res://ceiling_floor.gd" type="Script" id=14]
-[ext_resource path="res://BGM/pongal kombat noguitar.ogg" type="AudioStream" id=15]
-[ext_resource path="res://BGM/pongal kombat.ogg" type="AudioStream" id=16]
-[ext_resource path="res://img/info/wave-complete.png" type="Texture" id=17]
-[ext_resource path="res://img/info/game-over.png" type="Texture" id=18]
-[ext_resource path="res://sound/emergency.ogg" type="AudioStream" id=19]
+[ext_resource path="res://Barrier.tscn" type="PackedScene" id=5]
+[ext_resource path="res://img/dirt-tile.png" type="Texture" id=6]
+[ext_resource path="res://Paddle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://wall.gd" type="Script" id=8]
+[ext_resource path="res://img/base/base1.png" type="Texture" id=9]
+[ext_resource path="res://img/base/base2.png" type="Texture" id=10]
+[ext_resource path="res://img/base/base3.png" type="Texture" id=11]
+[ext_resource path="res://sound/explodemini.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound/Chunky Explosion.ogg" type="AudioStream" id=13]
+[ext_resource path="res://img/base/base-forcefield.png" type="Texture" id=14]
+[ext_resource path="res://ceiling_floor.gd" type="Script" id=15]
+[ext_resource path="res://BGM/pongal kombat noguitar.ogg" type="AudioStream" id=16]
+[ext_resource path="res://BGM/pongal kombat.ogg" type="AudioStream" id=17]
+[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=18]
+[ext_resource path="res://img/info/wave-complete.png" type="Texture" id=19]
+[ext_resource path="res://img/info/game-over.png" type="Texture" id=20]
+[ext_resource path="res://fonts/header-font-1.tres" type="DynamicFont" id=21]
+[ext_resource path="res://sound/emergency.ogg" type="AudioStream" id=22]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 16, 200 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 
 resource_name = "default"
 length = 3.0
@@ -56,7 +59,7 @@ tracks/1/keys = {
 "values": [ Rect2( 0, 0, 5, 400 ), Rect2( 5, 0, 5, 400 ), Rect2( 10, 0, 5, 400 ) ]
 }
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 400, 10 )
@@ -88,17 +91,25 @@ emission_time_variance_range = 0.1
 emission_period = 5.0
 total_enemies_to_emit = 0
 object_class = ExtResource( 4 )
-emission_time_variance_range = 0.5
+emission_time_variance_range = 1.25
+
+[node name="BarrierEmitter" parent="emitter" index="3" instance=ExtResource( 2 )]
+
+emission_period = 10.0
+total_enemies_to_emit = 0
+emitted_speed = 85.0
+object_class = ExtResource( 5 )
+emission_time_variance_range = 0.75
 
 [node name="background" type="Sprite" parent="." index="1"]
 
 position = Vector2( 320.957, 199.773 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 640, 400 )
 _sections_unfolded = [ "Region" ]
 
-[node name="Paddle" parent="." index="2" instance=ExtResource( 6 )]
+[node name="Paddle" parent="." index="2" instance=ExtResource( 7 )]
 
 editor/display_folded = true
 position = Vector2( 64, 200 )
@@ -115,14 +126,14 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 _sections_unfolded = [ "Collision", "Transform" ]
 damaged = 0
 
 [node name="base1" type="Sprite" parent="base" index="0"]
 
 position = Vector2( 27, 0 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 34, 400 )
 _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
@@ -131,7 +142,7 @@ _sections_unfolded = [ "Animation", "Offset", "Region", "Transform" ]
 
 visible = false
 position = Vector2( 27, 0 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 34, 400 )
 _sections_unfolded = [ "Region", "Transform" ]
@@ -140,7 +151,7 @@ _sections_unfolded = [ "Region", "Transform" ]
 
 visible = false
 position = Vector2( 27, 0 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 34, 400 )
 _sections_unfolded = [ "Region", "Transform" ]
@@ -154,7 +165,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="AudioDamage" type="AudioStreamPlayer2D" parent="base" index="4"]
 
 position = Vector2( 50, 0 )
-stream = ExtResource( 11 )
+stream = ExtResource( 12 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false
@@ -167,7 +178,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="AudioDestroy" type="AudioStreamPlayer2D" parent="base" index="5"]
 
 position = Vector2( 200, 0 )
-stream = ExtResource( 12 )
+stream = ExtResource( 13 )
 volume_db = 0.0
 pitch_scale = 1.0
 autoplay = false
@@ -182,7 +193,7 @@ _sections_unfolded = [ "Transform" ]
 editor/display_folded = true
 visible = false
 position = Vector2( 43, -200 )
-texture = ExtResource( 13 )
+texture = ExtResource( 14 )
 centered = false
 region_enabled = true
 region_rect = Rect2( 10, 0, 5, 400 )
@@ -195,7 +206,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 10.0
-anims/default = SubResource( 3 )
+anims/default = SubResource( 2 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
 
@@ -210,13 +221,13 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 _sections_unfolded = [ "Collision", "Transform" ]
 y_direction = 1
 
 [node name="collision" type="CollisionShape2D" parent="ceiling" index="0"]
 
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 
 [node name="floor" type="StaticBody2D" parent="." index="5"]
 
@@ -229,14 +240,14 @@ constant_linear_velocity = Vector2( 0, 0 )
 constant_angular_velocity = 0.0
 friction = 1.0
 bounce = 0.0
-script = ExtResource( 14 )
+script = ExtResource( 15 )
 _sections_unfolded = [ "Collision", "Transform" ]
 y_direction = -1
 
 [node name="collision" type="CollisionShape2D" parent="floor" index="0"]
 
 position = Vector2( 80, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="enemy" type="Node" parent="." index="6"]
@@ -247,9 +258,11 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="EnemyPaddle" type="Node" parent="enemy" index="2"]
 
+[node name="Barrier" type="Node" parent="enemy" index="3"]
+
 [node name="BGM_noguitar" type="AudioStreamPlayer" parent="." index="7"]
 
-stream = ExtResource( 15 )
+stream = ExtResource( 16 )
 volume_db = -0.65
 pitch_scale = 1.0
 autoplay = true
@@ -258,7 +271,7 @@ bus = "Master"
 
 [node name="BGM_withguitar" type="AudioStreamPlayer" parent="." index="8"]
 
-stream = ExtResource( 16 )
+stream = ExtResource( 17 )
 volume_db = -50.0
 pitch_scale = 1.0
 autoplay = true
@@ -267,8 +280,6 @@ bus = "Master"
 
 [node name="HUD" type="MarginContainer" parent="." index="9"]
 
-editor/display_folded = true
-visible = false
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
@@ -282,10 +293,10 @@ mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
 custom_constants/margin_right = 4
-custom_constants/margin_top = 4
+custom_constants/margin_top = 340
 custom_constants/margin_left = 4
 custom_constants/margin_bottom = 4
-_sections_unfolded = [ "Margin", "Rect", "custom_constants" ]
+_sections_unfolded = [ "Rect", "custom_constants" ]
 
 [node name="LblScore" type="Label" parent="HUD" index="0"]
 
@@ -294,32 +305,34 @@ anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_left = 4.0
-margin_top = 193.0
+margin_top = 360.0
 margin_right = 636.0
-margin_bottom = 207.0
+margin_bottom = 376.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_fonts/font = ExtResource( 18 )
 text = "0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [node name="wave-complete" type="Sprite" parent="." index="10"]
 
 visible = false
 position = Vector2( 331.679, 204.615 )
-texture = ExtResource( 17 )
+texture = ExtResource( 19 )
 
 [node name="game-over" type="Sprite" parent="." index="11"]
 
 visible = false
 position = Vector2( 328.739, 201.674 )
 z_index = 1
-texture = ExtResource( 18 )
+texture = ExtResource( 20 )
 _sections_unfolded = [ "Z Index" ]
 
 [node name="pause_popup" type="Panel" parent="." index="12"]
@@ -348,22 +361,23 @@ anchor_left = 0.5
 anchor_top = 0.0
 anchor_right = 0.5
 anchor_bottom = 0.0
-margin_left = -23.0
-margin_top = 80.0
-margin_right = 23.0
-margin_bottom = 94.0
+margin_left = -37.0
+margin_top = 81.0
+margin_right = 44.0
+margin_bottom = 98.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
+custom_fonts/font = ExtResource( 21 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Paused"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
-_sections_unfolded = [ "Margin", "custom_colors" ]
+_sections_unfolded = [ "Margin", "custom_colors", "custom_fonts" ]
 
 [node name="BtnResume" type="Button" parent="pause_popup" index="1"]
 
@@ -382,6 +396,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+custom_fonts/font = ExtResource( 18 )
 toggle_mode = false
 enabled_focus_mode = 2
 shortcut = null
@@ -389,6 +404,7 @@ group = null
 text = "Resume"
 flat = false
 align = 1
+_sections_unfolded = [ "custom_fonts" ]
 
 [node name="EmergencyTimer" type="Timer" parent="." index="13"]
 
@@ -400,7 +416,7 @@ autostart = true
 [node name="TimeoutTimer" type="Timer" parent="." index="14"]
 
 process_mode = 1
-wait_time = 44.0
+wait_time = 62.0
 one_shot = true
 autostart = true
 
@@ -413,7 +429,7 @@ autostart = false
 
 [node name="AudioEmergency" type="AudioStreamPlayer" parent="." index="16"]
 
-stream = ExtResource( 19 )
+stream = ExtResource( 22 )
 volume_db = -0.25
 pitch_scale = 1.0
 autoplay = false

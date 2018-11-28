@@ -82,13 +82,20 @@ func set_paddle_length(new_length):
 
 func fire_gun():
 	var bullet = Bullet.instance()
-	bullet.position.x = self.position.x + 6
+	bullet.position.x = self.position.x + 8
 	bullet.position.y = self.position.y
 	$"..".add_child(bullet)
 	$GunFireSound.play()
 	$GunRecoilTimer.start()
+	$"muzzle-fire".show()
+	$"muzzle-fire/MuzzleFireTimer".start()
 	self.gun_recoiling = true
 
+
+func _on_touch_Drone(drone):
+	print("paddle touched a drone: ", drone)
+	drone.blow_up()
+	pass
 
 func _on_Paddle_stun(amount):
 	self.stun_time = amount * stun_vulnerability
@@ -102,4 +109,7 @@ func _on_GunRecoilTimer_timeout():
 func _on_StunTimer_timeout():
 	self.stunned = false
 	self._stun_look(false)
-	pass # replace with function body
+
+
+func _on_MuzzleFireTimer_timeout():
+	$"muzzle-fire".hide()

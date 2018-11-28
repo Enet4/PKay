@@ -20,6 +20,7 @@ func _ready():
 		_set_paddle_length(length)
 
 func on_spawned(emitter, speed):
+	self.max_speed = speed
 	pass
 
 func _process(delta):
