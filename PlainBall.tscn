@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ball.gd" type="Script" id=1]
 [ext_resource path="res://img/ball/ball.png" type="Texture" id=2]
 [ext_resource path="res://img/poof.png" type="Texture" id=3]
+[ext_resource path="res://sound/Upper Cut.wav" type="AudioStream" id=4]
+[ext_resource path="res://sound/Ball Bounce.wav" type="AudioStream" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
 
@@ -42,7 +44,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="PlainBall" type="KinematicBody2D"]
+[node name="PlainBall" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 2
@@ -77,6 +79,28 @@ playback_speed = 16.0
 anims/Poof = SubResource( 2 )
 blend_times = [  ]
 _sections_unfolded = [ "Playback Options" ]
+
+[node name="AudioPoof" type="AudioStreamPlayer2D" parent="." index="3"]
+
+stream = ExtResource( 4 )
+volume_db = -2.5
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
+
+[node name="AudioBump" type="AudioStreamPlayer2D" parent="." index="4"]
+
+stream = ExtResource( 5 )
+volume_db = -1.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 [connection signal="hit" from="." to="." method="_on_PlainBall_hit"]
 

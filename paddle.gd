@@ -93,7 +93,6 @@ func fire_gun():
 
 
 func _on_touch_Drone(drone):
-	print("paddle touched a drone: ", drone)
 	drone.blow_up()
 	pass
 

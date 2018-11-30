@@ -13,7 +13,7 @@ custom_solver_bias = 0.0
 extents = Vector2( 4, 22 )
 _sections_unfolded = [ "Resource" ]
 
-[node name="Paddle" type="KinematicBody2D" index="0"]
+[node name="Paddle" type="KinematicBody2D"]
 
 position = Vector2( 0.209343, 0 )
 z_index = 1
@@ -75,14 +75,16 @@ autostart = false
 
 [node name="GunFireSound" type="AudioStreamPlayer2D" parent="." index="6"]
 
+position = Vector2( 64, 0 )
 stream = ExtResource( 5 )
-volume_db = -1.5
+volume_db = -3.5
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
 bus = "Master"
 area_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [node name="StunTimer" type="Timer" parent="." index="7"]
 
@@ -93,6 +95,7 @@ autostart = false
 
 [node name="muzzle-fire" type="Sprite" parent="." index="8"]
 
+editor/display_folded = true
 visible = false
 position = Vector2( 18, 1 )
 texture = ExtResource( 6 )

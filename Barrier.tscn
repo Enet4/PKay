@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Barrier.gd" type="Script" id=1]
 [ext_resource path="res://img/barrier/barrier1.png" type="Texture" id=2]
@@ -7,13 +7,14 @@
 [ext_resource path="res://img/barrier/barrier4.png" type="Texture" id=5]
 [ext_resource path="res://img/barrier/barrier5.png" type="Texture" id=6]
 [ext_resource path="res://img/barrier/barrier6.png" type="Texture" id=7]
+[ext_resource path="res://sound/NFF-moving-block.ogg" type="AudioStream" id=8]
 
-[sub_resource type="RectangleShape2D" id=2]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 6, 24 )
 
-[sub_resource type="SpriteFrames" id=1]
+[sub_resource type="SpriteFrames" id=2]
 
 animations = [ {
 "frames": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
@@ -34,12 +35,13 @@ speed = 85
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 
-shape = SubResource( 2 )
+shape = SubResource( 1 )
 
 [node name="moving" type="AnimatedSprite" parent="." index="1"]
 
-frames = SubResource( 1 )
+frames = SubResource( 2 )
 animation = "default"
+frame = 4
 playing = true
 
 [node name="stopped" type="Sprite" parent="." index="2"]
@@ -47,5 +49,16 @@ playing = true
 visible = false
 texture = ExtResource( 7 )
 _sections_unfolded = [ "Transform" ]
+
+[node name="AudioStop" type="AudioStreamPlayer2D" parent="." index="3"]
+
+stream = ExtResource( 8 )
+volume_db = -0.75
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Master"
+area_mask = 1
 
 

@@ -23,6 +23,7 @@ func _ready():
 	randomize()
 	if wave_seed != -1:
 		rand_seed(wave_seed)
+	$"HUD/LblScore".text = str(score)
 
 
 func _process(delta):
@@ -63,7 +64,9 @@ func _on_BtnResume_button_down():
 
 
 func _on_wave_emergency():
-	# TODO spawn temporary message
+	# spawn temporary message
+	$emergency.show()
+	$"emergency/EmergencyInfoTimer".start()
 	# replace BGM
 	$BGM_noguitar.stop()
 	$BGM_withguitar.volume_db = -0.65
@@ -103,4 +106,8 @@ func _on_GameOverTimer_timeout():
 func _on_NextPhaseTimer_timeout():
 	$BGM_noguitar.stop()
 	$BGM_withguitar.stop()
-	self.get_parent().open_preparation()
+	self.get_parent().next_phase()
+
+
+func _on_EmergencyInfoTimer_timeout():
+	$emergency.hide()

@@ -16,7 +16,6 @@ func _ready():
 	
 	for k in status.keys():
 		var upgrade_id = "upgrade_" + k
-		print("Initializing ", upgrade_id)
 		var upgrade = $"margin/vbox/margin/grid".get_node(upgrade_id)
 		upgrade.set_level(status[k])
 	

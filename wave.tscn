@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://wave.gd" type="Script" id=1]
 [ext_resource path="res://Emitter.tscn" type="PackedScene" id=2]
@@ -17,11 +17,14 @@
 [ext_resource path="res://ceiling_floor.gd" type="Script" id=15]
 [ext_resource path="res://BGM/pongal kombat noguitar.ogg" type="AudioStream" id=16]
 [ext_resource path="res://BGM/pongal kombat.ogg" type="AudioStream" id=17]
-[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=18]
-[ext_resource path="res://img/info/wave-complete.png" type="Texture" id=19]
-[ext_resource path="res://img/info/game-over.png" type="Texture" id=20]
-[ext_resource path="res://fonts/header-font-1.tres" type="DynamicFont" id=21]
-[ext_resource path="res://sound/emergency.ogg" type="AudioStream" id=22]
+[ext_resource path="res://img/info/wave-complete.png" type="Texture" id=18]
+[ext_resource path="res://img/info/game-over.png" type="Texture" id=19]
+[ext_resource path="res://img/info/emergency/emergency1.png" type="Texture" id=20]
+[ext_resource path="res://img/info/emergency/emergency2.png" type="Texture" id=21]
+[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=22]
+[ext_resource path="res://pause_popup.gd" type="Script" id=23]
+[ext_resource path="res://fonts/header-font-1.tres" type="DynamicFont" id=24]
+[ext_resource path="res://sound/emergency.ogg" type="AudioStream" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -62,9 +65,18 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-extents = Vector2( 400, 10 )
+extents = Vector2( 500, 10 )
 
-[node name="wave" type="Node2D"]
+[sub_resource type="SpriteFrames" id=4]
+
+animations = [ {
+"frames": [ ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[node name="wave" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
@@ -73,6 +85,8 @@ score = 0
 wave_strategy = null
 
 [node name="emitter" type="Node" parent="." index="0"]
+
+editor/display_folded = true
 
 [node name="BallEmitter" parent="emitter" index="0" instance=ExtResource( 2 )]
 
@@ -118,6 +132,7 @@ _sections_unfolded = [ "Collision", "Transform", "Z Index", "collision" ]
 
 [node name="base" type="StaticBody2D" parent="." index="3"]
 
+editor/display_folded = true
 position = Vector2( -10, 200 )
 input_pickable = false
 collision_layer = 1
@@ -212,7 +227,6 @@ _sections_unfolded = [ "Playback Options" ]
 
 [node name="ceiling" type="StaticBody2D" parent="." index="4"]
 
-editor/display_folded = true
 position = Vector2( 400, -10 )
 input_pickable = false
 collision_layer = 3
@@ -227,11 +241,12 @@ y_direction = 1
 
 [node name="collision" type="CollisionShape2D" parent="ceiling" index="0"]
 
+position = Vector2( 100, 0 )
 shape = SubResource( 3 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="floor" type="StaticBody2D" parent="." index="5"]
 
-editor/display_folded = true
 position = Vector2( 320, 410 )
 input_pickable = false
 collision_layer = 3
@@ -246,11 +261,13 @@ y_direction = -1
 
 [node name="collision" type="CollisionShape2D" parent="floor" index="0"]
 
-position = Vector2( 80, 0 )
+position = Vector2( 180, 0 )
 shape = SubResource( 3 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="enemy" type="Node" parent="." index="6"]
+
+editor/display_folded = true
 
 [node name="PlainBall" type="Node" parent="enemy" index="0"]
 
@@ -278,14 +295,47 @@ autoplay = true
 mix_target = 0
 bus = "Master"
 
-[node name="HUD" type="MarginContainer" parent="." index="9"]
+[node name="wave-complete" type="Sprite" parent="." index="9"]
 
+visible = false
+position = Vector2( 331.679, 204.615 )
+texture = ExtResource( 18 )
+
+[node name="game-over" type="Sprite" parent="." index="10"]
+
+visible = false
+position = Vector2( 328.739, 201.674 )
+z_index = 1
+texture = ExtResource( 19 )
+_sections_unfolded = [ "Z Index" ]
+
+[node name="emergency" type="AnimatedSprite" parent="." index="11"]
+
+visible = false
+position = Vector2( 327.114, 202.149 )
+frames = SubResource( 4 )
+animation = "default"
+frame = 1
+playing = true
+
+[node name="EmergencyInfoTimer" type="Timer" parent="emergency" index="0"]
+
+process_mode = 1
+wait_time = 1.5
+one_shot = true
+autostart = false
+
+[node name="HUD" type="MarginContainer" parent="." index="12"]
+
+editor/display_folded = true
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_right = 576.0
-margin_bottom = 336.0
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 575.0
+margin_bottom = 335.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -314,28 +364,14 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 18 )
+custom_fonts/font = ExtResource( 22 )
 text = "0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="wave-complete" type="Sprite" parent="." index="10"]
-
-visible = false
-position = Vector2( 331.679, 204.615 )
-texture = ExtResource( 19 )
-
-[node name="game-over" type="Sprite" parent="." index="11"]
-
-visible = false
-position = Vector2( 328.739, 201.674 )
-z_index = 1
-texture = ExtResource( 20 )
-_sections_unfolded = [ "Z Index" ]
-
-[node name="pause_popup" type="Panel" parent="." index="12"]
+[node name="pause_popup" type="Panel" parent="." index="13"]
 
 pause_mode = 2
 editor/display_folded = true
@@ -353,6 +389,7 @@ mouse_filter = 0
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+script = ExtResource( 23 )
 _sections_unfolded = [ "Pause", "Rect", "Visibility" ]
 
 [node name="LblResume" type="Label" parent="pause_popup" index="0"]
@@ -371,7 +408,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 21 )
+custom_fonts/font = ExtResource( 24 )
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "Paused"
 percent_visible = 1.0
@@ -379,64 +416,62 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Margin", "custom_colors", "custom_fonts" ]
 
-[node name="BtnResume" type="Button" parent="pause_popup" index="1"]
+[node name="LblHelp" type="Label" parent="pause_popup" index="1"]
 
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -32.0
-margin_top = -10.0
-margin_right = 32.0
-margin_bottom = 10.0
+margin_left = -99.0
+margin_top = -7.0
+margin_right = 98.0
+margin_bottom = 9.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
-focus_mode = 2
-mouse_filter = 0
+mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
-size_flags_vertical = 1
-custom_fonts/font = ExtResource( 18 )
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-text = "Resume"
-flat = false
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 22 )
+text = "Press 'Esc' or 'start' to forfeit"
 align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 _sections_unfolded = [ "custom_fonts" ]
 
-[node name="EmergencyTimer" type="Timer" parent="." index="13"]
+[node name="EmergencyTimer" type="Timer" parent="." index="14"]
 
 process_mode = 1
 wait_time = 21.9
 one_shot = true
 autostart = true
 
-[node name="TimeoutTimer" type="Timer" parent="." index="14"]
+[node name="TimeoutTimer" type="Timer" parent="." index="15"]
 
 process_mode = 1
 wait_time = 62.0
 one_shot = true
 autostart = true
 
-[node name="NextPhaseTimer" type="Timer" parent="." index="15"]
+[node name="NextPhaseTimer" type="Timer" parent="." index="16"]
 
 process_mode = 1
 wait_time = 2.4
 one_shot = true
 autostart = false
+_sections_unfolded = [ "Pause" ]
 
-[node name="AudioEmergency" type="AudioStreamPlayer" parent="." index="16"]
+[node name="AudioEmergency" type="AudioStreamPlayer" parent="." index="17"]
 
-stream = ExtResource( 22 )
+stream = ExtResource( 25 )
 volume_db = -0.25
 pitch_scale = 1.0
 autoplay = false
 mix_target = 0
 bus = "Master"
 
-[node name="GameOverTimer" type="Timer" parent="." index="17"]
+[node name="GameOverTimer" type="Timer" parent="." index="18"]
 
 process_mode = 1
 wait_time = 3.5
@@ -454,7 +489,7 @@ _sections_unfolded = [ "Pause" ]
 
 [connection signal="damage" from="base" to="base" method="_on_base_damage"]
 
-[connection signal="button_down" from="pause_popup/BtnResume" to="." method="_on_BtnResume_button_down"]
+[connection signal="timeout" from="emergency/EmergencyInfoTimer" to="." method="_on_EmergencyInfoTimer_timeout"]
 
 [connection signal="timeout" from="EmergencyTimer" to="." method="_on_EmergencyTimer_timeout"]
 

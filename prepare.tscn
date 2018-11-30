@@ -154,7 +154,7 @@ upgrade_name = "Paddle Speed"
 upgrade_description = "Makes it faster"
 upgrade_id = "speed"
 maximum_upgrade = 4
-price = [ 20, 35, 50, 100 ]
+price = [ 20, 40, 75, 120 ]
 
 [node name="upgrade_stability" parent="margin/vbox/margin/grid" index="1" instance=ExtResource( 5 )]
 
@@ -163,7 +163,7 @@ upgrade_name = "Stability"
 upgrade_description = "More acceleration, less inertia"
 upgrade_id = "stability"
 maximum_upgrade = 4
-price = [ 15, 30, 50, 75 ]
+price = [ 15, 35, 80, 115 ]
 
 [node name="upgrade_length" parent="margin/vbox/margin/grid" index="2" instance=ExtResource( 5 )]
 
@@ -172,7 +172,7 @@ upgrade_name = "Paddle Length"
 upgrade_description = "Increased paddle dimensions"
 upgrade_id = "length"
 maximum_upgrade = 4
-price = [ 20, 45, 70, 120 ]
+price = [ 20, 50, 95, 130 ]
 
 [node name="upgrade_resistance" parent="margin/vbox/margin/grid" index="3" instance=ExtResource( 5 )]
 
@@ -181,7 +181,7 @@ upgrade_name = "Stun Resistance"
 upgrade_description = "Decrease stun time"
 upgrade_id = "resistance"
 maximum_upgrade = 2
-price = [ 10, 20 ]
+price = [ 40, 75 ]
 
 [node name="upgrade_forcefield" parent="margin/vbox/margin/grid" index="4" instance=ExtResource( 5 )]
 
@@ -189,8 +189,8 @@ position = Vector2( 194, -1 )
 upgrade_name = "Base Force Field"
 upgrade_description = "Increase base resistance"
 upgrade_id = "forcefield"
-maximum_upgrade = 2
-price = [ 50, 85 ]
+maximum_upgrade = 3
+price = [ 60, 100, 140 ]
 
 [node name="upgrade_gun" parent="margin/vbox/margin/grid" index="5" instance=ExtResource( 5 )]
 
@@ -198,7 +198,7 @@ position = Vector2( 394, -1 )
 upgrade_name = "Gun"
 upgrade_description = "Ballistic fire weapon"
 upgrade_id = "gun"
-price = [ 80 ]
+price = [ 85 ]
 
 [node name="upgrade_gun_rate" parent="margin/vbox/margin/grid" index="6" instance=ExtResource( 5 )]
 
@@ -207,7 +207,7 @@ upgrade_name = "Fire Rate"
 upgrade_description = "Shorter recoil, more bullets"
 upgrade_id = "gun_rate"
 maximum_upgrade = 3
-price = [ 75, 100, 140 ]
+price = [ 75, 90, 145 ]
 
 [node name="LblIntelTitle" type="Label" parent="margin/vbox" index="3"]
 

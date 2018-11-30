@@ -3,6 +3,7 @@ extends Node
 const TITLE_SCENE = preload("res://title.tscn")
 const WAVE_SCENE = preload("res://wave.tscn")
 const PREPARATION_SCENE = preload("res://prepare.tscn")
+const ENDING_SCENE = preload("res://ending.tscn")
 
 # global game state goes here
 var score = 0
@@ -61,15 +62,11 @@ func open_wave():
 	# enter the next wave
 	self.wave_num += 1
 	var wave = WAVE_SCENE.instance()
-	# TODO configure stuff
+	# configure stuff
 	# - paddle configurations based on upgrades
 	_configure_paddle(wave.get_node("Paddle"))
 	# - base configuration based on upgrades
-	wave.get_node("base").damaged = {
-		0: 0,
-		1: -1,
-		2: -2,
-	}[upgrade_status["forcefield"]]
+	wave.get_node("base").damaged = -upgrade_status["forcefield"]
 	# - other wave configurations based on level
 	_configure_wave(wave)
 
@@ -82,11 +79,13 @@ func open_wave():
 	# add wave scene
 	self.add_child(wave)
 
+
 func next_phase():
-	if self.num_wave < 8:
+	if self.wave_num < 8:
 		self.open_preparation()
 	else:
 		self.open_ending()
+
 
 func open_preparation():
 	self.score = $wave.score
@@ -95,15 +94,19 @@ func open_preparation():
 	var prepare = self._new_prepare_scene()
 	self.add_child(prepare)
 
+
 func open_ending():
-	# TODO
-	pass
+	for child in self.get_children():
+		child.queue_free()
+	var ending = ENDING_SCENE.instance()
+	self.add_child(ending)
+
 
 func _new_prepare_scene():
 	var prepare = PREPARATION_SCENE.instance()
 	prepare.status = self.upgrade_status
 	prepare.wave_num = self.wave_num
-	match self.wave_num:
+	match self.wave_num: # this is the current wave, not the next one
 		1:
 			self.credits += 50
 			prepare.intelligence = "We have ovecome the first attack, but our scanners sense increased enemy activity soon. Upgrade your battle paddle."
@@ -111,26 +114,20 @@ func _new_prepare_scene():
 			self.credits += 65
 			prepare.intelligence = "Sources confirm that this isn't the best they can do. Remember that our walls can only take 2 hits."
 		3:
-			self.credits += 80
+			self.credits += 75
 			prepare.intelligence = "Our radars have detected unique activity patterns behind enemy lines. Be cautious, and save credits for future waves."
 		4:
 			self.credits += 100
 			prepare.intelligence = "Their enemy paddles resemble our own. Sending projectiles back might not be enough, but we can blow them up on sight. Grab some heat."
 		5:
-			self.credits += 120
-			prepare.intelligence = "Not even enemy paddles can surpass our wits. Keep up the good work, and stay sharp!"
-		6:
-			self.credits += 150
+			self.credits += 100
 			prepare.intelligence = "Watch out for those drones. The paddle can withstand the blow, but it consumes our thrust power. Better shoot them down before they strike."
 		6:
-			self.credits += 150
-			prepare.intelligence = "A spy has entered our city and damaged our walls from inside. It will not resist a single blow in this state! Be warned!"
-		7:
-			self.credits += 180
-			prepare.intelligence = "We're in for a motherload of enemies this time. Take all you can acquire."
+			self.credits += 110
+			prepare.intelligence = "A spy has entered our city and damaged our walls from inside. It might not resist an onslaught."
 		_:
-			self.credits += 400
-			prepare.intelligence = "Our information systems were breached. All our intel is gone. Use all our funds and be prepared for the worst."
+			self.credits += 500
+			prepare.intelligence = "«A letter from the president:» Our network has been breached. The intel department is unreachable. Use all our funds and be prepared for the worst."
 
 	prepare.credits = self.credits
 	return prepare
@@ -194,24 +191,26 @@ func _configure_wave(wave):
 		5: 0.4,
 		6: 0.4,
 		7: 0.2,
-		8: 0,
+		8: 0.05,
 	}[wave_num]
 	
 	ball_emitter.emitted_speed = {
 		1: 175,
-		2: 180,
-		3: 220,
+		2: 200,
+		3: 225,
 		4: 200,
 		5: 220,
 		6: 240,
-		7: 260,
+		7: 250,
 		8: 300,
 	}[wave_num]
 	
 	# emergency mode only exists from wave 2
 	if wave_num >= 8:
 		wave.get_node("EmergencyTimer").wait_time = 21.9
-	if wave_num >= 3:
+	elif wave_num >= 7:
+		wave.get_node("EmergencyTimer").wait_time = 36
+	elif wave_num >= 3:
 		wave.get_node("EmergencyTimer").wait_time = 42.9
 	else:
 		wave.get_node("EmergencyTimer").wait_time = 99999
@@ -227,8 +226,16 @@ func _configure_wave(wave):
 		enemypaddle_emitter.emission_period = {
 			4: 43,
 			5: 30,
-			6: 10,
-			7: 3
+			6: 20,
+			7: 10,
+			8: 3
+		}[wave_num]
+		enemypaddle_emitter.emitted_speed = {
+			4: 90,
+			5: 100,
+			6: 120,
+			7: 150,
+			8: 200,
 		}[wave_num]
 	else:
 		enemypaddle_emitter.total_enemies_to_emit = 0
@@ -237,26 +244,23 @@ func _configure_wave(wave):
 	var barrier_emitter = emitter.get_node("BarrierEmitter")
 	if wave_num >= 5:
 		barrier_emitter.total_enemies_to_emit = {
-			4: 2,
 			5: 6,
 			6: 50,
 			7: 50,
 			8: 50,
 		}[wave_num]
 		barrier_emitter.emission_period = {
-			4: 34,
 			5: 20,
 			6: 20,
 			7: 18,
 			8: 9,
 		}[wave_num]
-		barrier_emitter.emission_speed = {
-			4: 85,
-			5: 90,
-			6: 100,
+		barrier_emitter.emitted_speed = {
+			5: 85,
+			6: 90,
 			7: 100,
 			8: 150,
-		}
+		}[wave_num]
 	else:
 		barrier_emitter.total_enemies_to_emit = 0
 
@@ -264,16 +268,16 @@ func _configure_wave(wave):
 	var drone_emitter = emitter.get_node("DroneEmitter")
 	if wave_num >= 5:
 		drone_emitter.total_enemies_to_emit = {
-			4: 1,
-			5: 2,
+			5: 1,
 			6: 2,
-			7: 4,
+			7: 3,
+			8: 4,
 		}[wave_num]
 		drone_emitter.emission_period = {
-			4: 42,
-			5: 13,
-			6: 22,
-			7: 16,
+			5: 42,
+			6: 13,
+			7: 22,
+			8: 16,
 		}[wave_num]
 	else:
 		drone_emitter.total_enemies_to_emit = 0

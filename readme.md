@@ -33,6 +33,11 @@ All works in the BGM folder, namely _"Pongal Kombat"_ (with and without guitar) 
 
 - [Crash Collision](https://opengameart.org/content/crash-collision) is licensed under the CC0.
 
-All sound effects above are downloadable at <https://opengameart.org>.
+- [Upper Cut](http://soundbible.com/993-Upper-Cut.htm) (c) by Mike Koenig is licensed under the CC0-BY https://creativecommons.org/licenses/by/3.0/
 
-[Silkscreen](http://www.kottke.org/plus/type/silkscreen/index.html) font by Jason Kottke (jason@kottke.org) is licensed under the [SIL Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
+- [Ball Bounce](http://soundbible.com/1626-Ball-Bounce.html) by Popup Pixels (for "Ball Bounce.wav")  is licensed under the CC0-BY https://creativecommons.org/licenses/by/3.0/ 
+
+- [Silkscreen](http://www.kottke.org/plus/type/silkscreen/index.html) font by Jason Kottke (jason@kottke.org) is licensed under the [SIL Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
+
+- [FiraSans](https://www.fontsquirrel.com/fonts/fira-sans) by Mozilla is licensed under the [SIL Open Font License](https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL).
+

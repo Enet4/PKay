@@ -78,7 +78,7 @@ func _physics_process(delta):
 		thrust_force *= 1.5
 		$hull.animation = "kamikaze"
 		$DroneSound.pitch_scale = 2.0
-		$DroneSound.volume = -2.2
+		$DroneSound.volume_db = -2.2
 
 	# if close enough to the wander target, choose new target
 	if self.position.distance_squared_to(self.target_position) < 60:
@@ -100,10 +100,10 @@ func _on_body_entered(body):
 
 
 func blow_up():
-	# TODO particles sound n carp
 	$hull.visible = false
 	$poof.visible = true
 	$"poof/animation".play("default")
+	$PoofSound.play()
 	$"../../..".num_enemies -= 1
 
 

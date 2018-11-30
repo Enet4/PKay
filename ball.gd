@@ -13,7 +13,6 @@ onready var initial_pos = self.position
 
 func _ready():
 	$"../../..".num_enemies += 1
-	print("PlainBall spawned. num_enemies = ", $"../../..".num_enemies)
 
 func on_spawned(emitter, speed):
 	# roll 1d3, apply vertical velocity
@@ -26,10 +25,13 @@ func _physics_process(delta):
 	# bounce to stuff, no dampening
 	var collision = move_and_collide(linear_velocity * delta)
 	if collision:
-		if collision.collider.get_name() == "Paddle":
+		var collided_name = collision.collider.get_name()
+		if collided_name == "Paddle":
 			self._on_touch_Paddle(delta, collision)
-		if collision.collider.get_name() == "base":
+		elif collided_name == "base":
 			self._on_touch_Base(delta, collision)
+		elif collided_name == "ceiling" or collided_name == "floor":
+			linear_velocity = linear_velocity.bounce(collision.normal)
 		elif collision.collider.get_parent().get_name() == "Drone":
 			self._on_touch_Drone(delta, collision)
 		elif collision.collider.get_parent().get_name() == "PlainBall":
@@ -38,11 +40,7 @@ func _physics_process(delta):
 			self._on_touch_EnemyPaddle(delta, collision)
 		elif collision.collider.get_parent().get_name() == "Barrier":
 			self._on_touch_Barrier(delta, collision)
-		else:
-			# bounce against any other kind of object
-			linear_velocity = linear_velocity.bounce(collision.normal)
 	if abs(self.linear_velocity.x) < 0.25:
-		print(self, ": not enough horizontal velocity, boosting...")
 		self.linear_velocity.x *= 1.25
 
 func _process(delta):
@@ -64,14 +62,18 @@ func _on_touch_Paddle(delta, collision):
 	self.hit = true
 	self.set_collision_mask_bit(1, true)
 	self.set_collision_mask_bit(2, true)
+	# move a bit to the right to prevent getting stuck
+	self.position.x += 0.5
 	# tweak collision normal depending on where it was touched
 	var normal = self._paddle_normal_tweak(collision)
 	linear_velocity = linear_velocity.bounce(normal)
+	$AudioBump.play()
 
 func _on_touch_Barrier(delta, collision):
 	# bounce normally and destroy barrier
 	collision.collider.blow_up()
 	linear_velocity = linear_velocity.bounce(collision.normal)
+	$AudioBump.play()
 
 func _on_touch_Ball(delta, collision):
 	var ball = collision.collider
@@ -135,9 +137,9 @@ func blow_up():
 	$poof.show()
 	$"poof/animate".current_animation = "Poof"
 	$"poof/animate".play()
-	# TODO poof sound
+	# poof sound
+	$AudioPoof.play()
 	$"../../..".num_enemies -= 1
-	print(self, " poofed. num_enemies = ", $"../../..".num_enemies)
 
 
 func _on_poof():

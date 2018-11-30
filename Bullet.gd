@@ -20,6 +20,8 @@ func _physics_process(delta):
 			self._on_touch_Ball(delta, collision)
 		elif collision.collider.get_parent().get_name() == "EnemyPaddle":
 			self._on_touch_EnemyPaddle(delta, collision)
+		elif collision.collider.get_parent().get_name() == "Barrier":
+			self._on_touch_Barrier(delta, collision)
 	self.position += linear_velocity * delta
 
 func _on_touch_Drone(delta, collision):
@@ -28,7 +30,6 @@ func _on_touch_Drone(delta, collision):
 	collision.collider.apply_impulse(
 		self.position,
 		self.linear_velocity * 2)
-
 	self.blow_up()
 
 func _on_touch_Ball(delta, collision):
@@ -44,6 +45,9 @@ func _on_touch_EnemyPaddle(delta, collision):
 	self.blow_up()
 	pass
 
+func _on_touch_Barrier(delta, collision):
+	self.blow_up()
+	pass
 #func _process(delta):
 #	# Called every frame. Delta is time since last frame.
 #	# Update game logic here.
