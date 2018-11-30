@@ -10,8 +10,9 @@ config_version=3
 
 [application]
 
-config/name="Pkay"
+config/name="PKay"
 run/main_scene="res://game.tscn"
+config/use_custom_user_dir=true
 run/frame_delay_msec=10
 boot_splash/image="res://boot.png"
 config/icon="res://icon.png"
