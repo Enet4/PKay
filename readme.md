@@ -2,6 +2,8 @@
 
 PKay is an action survival game where you control a Pong paddle to protect the city from incoming projectiles and save your kind.
 
+<iframe frameborder="0" src="https://itch.io/embed/336890" width="552" height="167"></iframe>
+
 **Still under development.**
 
 Built using the [Godot Engine](https://godotengine.org).

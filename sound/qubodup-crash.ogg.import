@@ -11,5 +11,5 @@ dest_files=[ "res://.import/qubodup-crash.ogg-f8082e5431df66c2892537879e6edd3d.o
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

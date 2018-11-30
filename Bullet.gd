@@ -29,7 +29,7 @@ func _on_touch_Drone(delta, collision):
 	collision.collider.emit_signal('damage')
 	collision.collider.apply_impulse(
 		self.position,
-		self.linear_velocity * 2)
+		self.linear_velocity * 1.25)
 	self.blow_up()
 
 func _on_touch_Ball(delta, collision):

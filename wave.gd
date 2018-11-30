@@ -31,7 +31,7 @@ func _process(delta):
 		get_tree().paused = true
 		$pause_popup.show()
 
-	if Input.is_action_pressed("ui_accept") or Input.is_action_pressed("ui_select"):
+	if Input.is_action_just_released("ui_accept") or Input.is_action_just_released("ui_select"):
 		if self.timeout and self.num_enemies == 0:
 			self._on_NextPhaseTimer_timeout()
 
