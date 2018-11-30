@@ -9,7 +9,7 @@
 [ext_resource path="res://img/barrier/barrier6.png" type="Texture" id=7]
 [ext_resource path="res://sound/NFF-moving-block.ogg" type="AudioStream" id=8]
 
-[sub_resource type="RectangleShape2D" id=1]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
 extents = Vector2( 6, 24 )
@@ -23,7 +23,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Barrier" type="KinematicBody2D"]
+[node name="Barrier" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 2
@@ -35,7 +35,7 @@ speed = 85
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
 
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="moving" type="AnimatedSprite" parent="." index="1"]
 

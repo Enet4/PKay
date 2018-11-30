@@ -15,7 +15,6 @@ func _physics_process(delta):
 			self.position.x -= self.speed * delta
 			if self.position.x <= self.stop_at_x:
 				self.position.x = self.stop_at_x
-				$AudioStop.play()
 				$moving.hide()
 				$stopped.show()
 
