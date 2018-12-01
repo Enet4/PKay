@@ -62,7 +62,7 @@ func _on_upgrade_change_level(level):
 
 
 func _update_cost_label():
-	if self.upgrade_level == self.maximum_upgrade:
+	if self.upgrade_level >= self.maximum_upgrade:
 		$"vbox/LblCost".text = "Maximized"
 	else:
 		$"vbox/LblCost".text = "Cost: " + str(self.price[self.upgrade_level])

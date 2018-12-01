@@ -19,7 +19,7 @@ func _ready():
 	if length != null:
 		_set_paddle_length(length)
 
-func on_spawned(emitter, speed):
+func on_spawned(emitter, speed, _arg1):
 	self.max_speed = speed
 	pass
 

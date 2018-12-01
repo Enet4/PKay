@@ -10,7 +10,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 4, 22 )
+extents = Vector2( 5, 22 )
 _sections_unfolded = [ "Resource" ]
 
 [node name="Paddle" type="KinematicBody2D"]
@@ -22,7 +22,7 @@ collision_layer = 1
 collision_mask = 3
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-_sections_unfolded = [ "Collision", "Z Index", "collision" ]
+_sections_unfolded = [ "Collision", "Visibility", "Z Index", "collision" ]
 has_gun = false
 length = 36
 max_speed = 200
@@ -49,7 +49,6 @@ position = Vector2( -8, -10 )
 scale = Vector2( 1, 20 )
 texture = ExtResource( 3 )
 centered = false
-offset = Vector2( 0.5, 0 )
 region_rect = Rect2( 0, 0, 4, 8 )
 _sections_unfolded = [ "Offset", "Transform" ]
 
@@ -62,7 +61,7 @@ _sections_unfolded = [ "Transform", "Visibility" ]
 
 [node name="collision" type="CollisionShape2D" parent="." index="4"]
 
-position = Vector2( 4, 0 )
+position = Vector2( 2, 0 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
@@ -75,7 +74,7 @@ autostart = false
 
 [node name="GunFireSound" type="AudioStreamPlayer2D" parent="." index="6"]
 
-position = Vector2( 64, 0 )
+position = Vector2( 69.7907, 0 )
 stream = ExtResource( 5 )
 volume_db = -3.5
 pitch_scale = 1.0
@@ -89,7 +88,7 @@ _sections_unfolded = [ "Transform" ]
 [node name="StunTimer" type="Timer" parent="." index="7"]
 
 process_mode = 1
-wait_time = 1.0
+wait_time = 1.75
 one_shot = false
 autostart = false
 
@@ -108,7 +107,7 @@ wait_time = 0.03
 one_shot = false
 autostart = false
 
-[connection signal="stun" from="." to="." method="_on_Paddle_stun" binds= [ 0.0 ]]
+[connection signal="stun" from="." to="." method="_on_stun"]
 
 [connection signal="timeout" from="GunRecoilTimer" to="." method="_on_GunRecoilTimer_timeout"]
 

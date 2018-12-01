@@ -6,6 +6,7 @@ signal stop
 export (float) var emission_period = 2.5
 export (int) var total_enemies_to_emit = 300
 export (float) var emitted_speed = 175
+export (float) var emitted_arg1 = 1.0
 export (PackedScene) var object_class = preload("res://PlainBall.tscn")
 export var random_seed = -1
 export (float) var emission_time_variance_range = 0.25
@@ -36,7 +37,7 @@ func emit():
 	new_enemy.position.y = 30 + randf() * 340
 	# on_spawn is called, can be used to
 	# tweak speed and whatnot based on the given emitter
-	new_enemy.on_spawned(self, self.emitted_speed)
+	new_enemy.on_spawned(self, self.emitted_speed, self.emitted_arg1)
 	enemies_emitted += 1
 	var enemy_name = new_enemy.get_name()
 	var enemy_node = $"../../enemy".get_node(enemy_name)

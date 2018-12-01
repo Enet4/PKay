@@ -17,9 +17,10 @@ func _physics_process(delta):
 				self.position.x = self.stop_at_x
 				$moving.hide()
 				$stopped.show()
+				$AudioStop.play()
 
 func blow_up():
 	self.queue_free()
 
-func on_spawned(emitter, speed):
+func on_spawned(emitter, speed, _arg1):
 	self.speed = speed

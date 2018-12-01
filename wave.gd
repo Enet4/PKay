@@ -25,25 +25,18 @@ func _ready():
 		rand_seed(wave_seed)
 	$"HUD/LblScore".text = str(score)
 
+func _input(event):
+	if event is InputEventMouseMotion:
+		pass
 
-func _process(delta):
-	if Input.is_action_pressed("ui_pause"):
+	if event.is_action_pressed("ui_pause"):
 		get_tree().paused = true
 		$pause_popup.show()
 
-	if Input.is_action_just_released("ui_accept") or Input.is_action_just_released("ui_select"):
+	if event.is_action_released("ui_accept") or event.is_action_released("ui_select"):
 		if self.timeout and self.num_enemies == 0:
 			self._on_NextPhaseTimer_timeout()
-
-	if self.timeout:
-		# check if enemies are still around
-		if self.no_enemies():
-			self._on_wave_end()
-
-
-func no_enemies():
-	return self.num_enemies == 0
-
+	pass
 
 func _on_wave_score(value):
 	score += value
@@ -56,11 +49,6 @@ func _on_wave_end():
 	if $BGM_withguitar.volume_db > -4:
 		$BGM_withguitar.volume_db = -4
 	$NextPhaseTimer.start()
-
-
-func _on_BtnResume_button_down():
-	get_tree().paused = false
-	$pause_popup.hide()
 
 
 func _on_wave_emergency():
@@ -86,6 +74,9 @@ func _on_TimeoutTimer_timeout():
 	# stop all emitters
 	for e in $emitter.get_children():
 		e.emit_signal('stop')
+	# check if enemies are still around
+	if self.num_enemies == 0:
+		self._on_wave_end()
 
 
 func _on_wave_game_over():
@@ -111,3 +102,14 @@ func _on_NextPhaseTimer_timeout():
 
 func _on_EmergencyInfoTimer_timeout():
 	$emergency.hide()
+
+
+func inc_enemy_count():
+	self.num_enemies += 1
+
+
+func dec_enemy_count():
+	self.num_enemies -= 1
+	if self.timeout and self.num_enemies == 0:
+		self._on_wave_end()
+

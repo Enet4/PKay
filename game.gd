@@ -20,15 +20,7 @@ var upgrade_status = {
 }
 
 func _ready():
-	# Called when the node is added to the scene for the first time.
-	# Initialization here
-	pass
-
-#func _process(delta):
-#	# Called every frame. Delta is time since last frame.
-#	# Update game logic here.
-#	pass
-
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 func exit_game():
 	self.get_tree().quit()
@@ -112,13 +104,13 @@ func _new_prepare_scene():
 			prepare.intelligence = "We have ovecome the first attack, but our scanners sense increased enemy activity soon. Upgrade your battle paddle."
 		2:
 			self.credits += 65
-			prepare.intelligence = "Sources confirm that this isn't the best they can do. Remember that our walls can only take 2 hits."
+			prepare.intelligence = "Sources confirm that this isn't the best they can do. Remember that our walls can only take 2 hits before they collapse."
 		3:
 			self.credits += 75
 			prepare.intelligence = "Our radars have detected unique activity patterns behind enemy lines. Be cautious, and save credits for future waves."
 		4:
 			self.credits += 100
-			prepare.intelligence = "Their enemy paddles resemble our own. Sending projectiles back might not be enough, but we can blow them up on sight. Grab some heat."
+			prepare.intelligence = "Their enemy paddles resemble our own. Sending projectiles back might not be enough, but we can blow them up on sight. Grab some lead."
 		5:
 			self.credits += 100
 			prepare.intelligence = "Watch out for those drones. The paddle can withstand the blow, but it consumes our thrust power. Better shoot them down before they strike."
@@ -175,41 +167,43 @@ func _configure_wave(wave):
 	var ball_emitter = emitter.get_node("BallEmitter")
 	ball_emitter.emission_period = {
 		1: 2.4,
-		2: 1.8,
-		3: 1.2,
-		4: 1.6,
-		5: 1.6,
-		6: 1.4,
-		7: 1.2,
-		8: 1.0,
+		2: 2.0,
+		3: 1.25,
+		4: 1.8,
+		5: 1.75,
+		6: 1.7,
+		7: 1.7,
+		8: 1.2,
 	}[wave_num]
 	ball_emitter.emission_time_variance_range = {
 		1: 0.25,
 		2: 0.4,
 		3: 0.35,
-		4: 0.3,
+		4: 0.35,
 		5: 0.4,
-		6: 0.4,
+		6: 0.35,
 		7: 0.2,
 		8: 0.05,
 	}[wave_num]
 	
 	ball_emitter.emitted_speed = {
-		1: 175,
+		1: 170,
 		2: 200,
-		3: 225,
+		3: 220,
 		4: 200,
-		5: 220,
-		6: 240,
-		7: 250,
-		8: 300,
+		5: 210,
+		6: 210,
+		7: 210,
+		8: 280,
 	}[wave_num]
 	
 	# emergency mode only exists from wave 2
 	if wave_num >= 8:
-		wave.get_node("EmergencyTimer").wait_time = 21.9
-	elif wave_num >= 7:
 		wave.get_node("EmergencyTimer").wait_time = 36
+		# make last wave longer
+		wave.get_node("TimeoutTimer").wait_time = 76
+	elif wave_num >= 7:
+		wave.get_node("EmergencyTimer").wait_time = 38
 	elif wave_num >= 3:
 		wave.get_node("EmergencyTimer").wait_time = 42.9
 	else:
@@ -269,15 +263,27 @@ func _configure_wave(wave):
 	if wave_num >= 5:
 		drone_emitter.total_enemies_to_emit = {
 			5: 1,
-			6: 2,
-			7: 3,
-			8: 4,
+			6: 3,
+			7: 4,
+			8: 6,
 		}[wave_num]
 		drone_emitter.emission_period = {
 			5: 42,
 			6: 13,
 			7: 22,
 			8: 16,
+		}[wave_num]
+		drone_emitter.emitted_speed = {
+			5: 320,
+			6: 330,
+			7: 340,
+			8: 360,
+		}[wave_num]
+		drone_emitter.emitted_arg1 = {
+			5: 18,
+			6: 16,
+			7: 16,
+			8: 8,
 		}[wave_num]
 	else:
 		drone_emitter.total_enemies_to_emit = 0

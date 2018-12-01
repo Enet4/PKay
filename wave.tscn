@@ -21,9 +21,9 @@
 [ext_resource path="res://img/info/game-over.png" type="Texture" id=19]
 [ext_resource path="res://img/info/emergency/emergency1.png" type="Texture" id=20]
 [ext_resource path="res://img/info/emergency/emergency2.png" type="Texture" id=21]
-[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=22]
-[ext_resource path="res://pause_popup.gd" type="Script" id=23]
-[ext_resource path="res://fonts/header-font-1.tres" type="DynamicFont" id=24]
+[ext_resource path="res://pause_popup.gd" type="Script" id=22]
+[ext_resource path="res://fonts/header-font-1.tres" type="DynamicFont" id=23]
+[ext_resource path="res://fonts/base-text-font.tres" type="DynamicFont" id=24]
 [ext_resource path="res://sound/emergency.ogg" type="AudioStream" id=25]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -76,7 +76,7 @@ animations = [ {
 "speed": 6.0
 } ]
 
-[node name="wave" type="Node2D" index="0"]
+[node name="wave" type="Node2D"]
 
 script = ExtResource( 1 )
 _sections_unfolded = [ "Pause" ]
@@ -91,12 +91,13 @@ editor/display_folded = true
 [node name="BallEmitter" parent="emitter" index="0" instance=ExtResource( 2 )]
 
 total_enemies_to_emit = 100
+emitted_arg1 = 1.0
 
 [node name="EnemyPaddleEmitter" parent="emitter" index="1" instance=ExtResource( 2 )]
 
 emission_period = 10.0
 total_enemies_to_emit = 0
-emitted_speed = 50.0
+emitted_arg1 = 1.0
 object_class = ExtResource( 3 )
 emission_time_variance_range = 0.1
 
@@ -104,6 +105,7 @@ emission_time_variance_range = 0.1
 
 emission_period = 5.0
 total_enemies_to_emit = 0
+emitted_arg1 = 1.0
 object_class = ExtResource( 4 )
 emission_time_variance_range = 1.25
 
@@ -111,7 +113,7 @@ emission_time_variance_range = 1.25
 
 emission_period = 10.0
 total_enemies_to_emit = 0
-emitted_speed = 85.0
+emitted_arg1 = 1.0
 object_class = ExtResource( 5 )
 emission_time_variance_range = 0.75
 
@@ -128,7 +130,7 @@ _sections_unfolded = [ "Region" ]
 editor/display_folded = true
 position = Vector2( 64, 200 )
 z_index = 0
-_sections_unfolded = [ "Collision", "Transform", "Z Index", "collision" ]
+_sections_unfolded = [ "Collision", "Transform", "Visibility", "Z Index", "collision" ]
 
 [node name="base" type="StaticBody2D" parent="." index="3"]
 
@@ -299,7 +301,9 @@ bus = "Master"
 
 visible = false
 position = Vector2( 331.679, 204.615 )
+z_index = 1
 texture = ExtResource( 18 )
+_sections_unfolded = [ "Z Index" ]
 
 [node name="game-over" type="Sprite" parent="." index="10"]
 
@@ -311,12 +315,14 @@ _sections_unfolded = [ "Z Index" ]
 
 [node name="emergency" type="AnimatedSprite" parent="." index="11"]
 
+editor/display_folded = true
 visible = false
 position = Vector2( 327.114, 202.149 )
+z_index = 1
 frames = SubResource( 4 )
 animation = "default"
-frame = 1
 playing = true
+_sections_unfolded = [ "Z Index" ]
 
 [node name="EmergencyInfoTimer" type="Timer" parent="emergency" index="0"]
 
@@ -325,7 +331,75 @@ wait_time = 1.5
 one_shot = true
 autostart = false
 
-[node name="HUD" type="MarginContainer" parent="." index="12"]
+[node name="pause_popup" type="Panel" parent="." index="12"]
+
+pause_mode = 2
+visible = false
+self_modulate = Color( 0.0784314, 0.117647, 0.117647, 0.627451 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 576.0
+margin_bottom = 336.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+script = ExtResource( 22 )
+_sections_unfolded = [ "Anchor", "Focus", "Grow Direction", "Hint", "Margin", "Mouse", "Rect" ]
+
+[node name="LblResume" type="Label" parent="pause_popup" index="0"]
+
+anchor_left = 0.5
+anchor_top = 0.0
+anchor_right = 0.5
+anchor_bottom = 0.0
+margin_left = -37.0
+margin_top = 81.0
+margin_right = 44.0
+margin_bottom = 98.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Paused"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "custom_colors", "custom_fonts" ]
+
+[node name="LblHelp" type="Label" parent="pause_popup" index="1"]
+
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -99.0
+margin_top = -7.0
+margin_right = 98.0
+margin_bottom = 9.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 24 )
+text = "Press 'Esc' or 'start' to forfeit"
+align = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="HUD" type="MarginContainer" parent="." index="13"]
 
 editor/display_folded = true
 anchor_left = 0.0
@@ -364,77 +438,8 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = ExtResource( 22 )
-text = "0"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "custom_fonts" ]
-
-[node name="pause_popup" type="Panel" parent="." index="13"]
-
-pause_mode = 2
-editor/display_folded = true
-visible = false
-self_modulate = Color( 0.0784314, 0.117647, 0.117647, 0.627451 )
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 576.0
-margin_bottom = 336.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-script = ExtResource( 23 )
-_sections_unfolded = [ "Pause", "Rect", "Visibility" ]
-
-[node name="LblResume" type="Label" parent="pause_popup" index="0"]
-
-anchor_left = 0.5
-anchor_top = 0.0
-anchor_right = 0.5
-anchor_bottom = 0.0
-margin_left = -37.0
-margin_top = 81.0
-margin_right = 44.0
-margin_bottom = 98.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
 custom_fonts/font = ExtResource( 24 )
-custom_colors/font_color = Color( 1, 1, 1, 1 )
-text = "Paused"
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
-_sections_unfolded = [ "Margin", "custom_colors", "custom_fonts" ]
-
-[node name="LblHelp" type="Label" parent="pause_popup" index="1"]
-
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -99.0
-margin_top = -7.0
-margin_right = 98.0
-margin_bottom = 9.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 2
-mouse_default_cursor_shape = 0
-size_flags_horizontal = 1
-size_flags_vertical = 4
-custom_fonts/font = ExtResource( 22 )
-text = "Press 'Esc' or 'start' to forfeit"
-align = 1
+text = "0"
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
@@ -484,8 +489,6 @@ _sections_unfolded = [ "Pause" ]
 [connection signal="game_over" from="." to="." method="_on_wave_game_over"]
 
 [connection signal="score" from="." to="." method="_on_wave_score"]
-
-[connection signal="score" from="." to="." method="_on_game_score"]
 
 [connection signal="damage" from="base" to="base" method="_on_base_damage"]
 

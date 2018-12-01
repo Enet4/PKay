@@ -96,7 +96,7 @@ patience = 18
 fly_rect = Rect2( 350, 50, 180, 300 )
 health = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+[node name="collision" type="CollisionShape2D" parent="." index="0"]
 
 position = Vector2( 0, 1 )
 rotation = 1.5708
@@ -107,7 +107,7 @@ _sections_unfolded = [ "Transform" ]
 
 frames = SubResource( 2 )
 animation = "default"
-frame = 5
+frame = 1
 playing = true
 _sections_unfolded = [ "Transform" ]
 

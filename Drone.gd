@@ -25,29 +25,19 @@ func reset_destination():
 		self.fly_rect.position.y + randf() * self.fly_rect.size.y
 	)
 
-func on_spawned(emitter, speed):
+func on_spawned(emitter, arg0, arg1):
+	if arg0:
+		self.thrust_force = arg0
+	if arg1:
+		self.patience = arg1
 	pass
 
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
-	$"../../..".num_enemies += 1
+	$"../../..".inc_enemy_count()
 	self.window_size = get_viewport_rect()
 	self.reset_destination()
-	# make connection with paddle for collision detection
-	#self.connect('body_entered', $"../../../paddle", 'on_touch_Drone', [self])
-	# make connection with base for collision detection
-	#self.connect('body_entered', $"../../../base", 'on_touch_Drone', [self])
-
-
-#func _physics_process(delta):
-	#self.rotation = 0
-
-
-func _on_touch_Paddle(body):
-	# destroy itself and stun the paddle
-	body.emit_signal('stun', 0.75)
-	self.blow_up()
 
 
 func _physics_process(delta):
@@ -59,7 +49,7 @@ func _physics_process(delta):
 		self.linear_velocity.y = abs(self.linear_velocity.y) * 0.7
 
 	# if too low, bounce
-	if self.position.y > self.window_size.size.y - 6:
+	elif self.position.y > self.window_size.size.y - 6:
 		# with a bit of dampening
 		self.position.y = self.window_size.size.y - 6
 		self.linear_velocity.y = -abs(self.linear_velocity.y) * 0.7
@@ -90,8 +80,8 @@ func _physics_process(delta):
 
 
 func _on_body_entered(body):
-	print("Drone::_on_body_entered: ", body)
 	if body.get_name() == "Paddle":
+		body.emit_signal('stun', 1.75)
 		$"../../..".emit_signal('score', 15)
 		self.blow_up()
 	elif body.get_name() == "base":
@@ -100,11 +90,12 @@ func _on_body_entered(body):
 
 
 func blow_up():
+	$collision.disabled = true
 	$hull.visible = false
 	$poof.visible = true
 	$"poof/animation".play("default")
 	$PoofSound.play()
-	$"../../..".num_enemies -= 1
+	$"../../..".dec_enemy_count()
 
 
 func _on_Drone_hit():
